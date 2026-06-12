@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { SignInButton, SignUpButton, UserButton, useUser, useClerk } from "@clerk/nextjs";
 import {
   ArrowRight,
   Sparkles,
@@ -99,10 +100,12 @@ const STEPS: Step[] = [
 ];
 
 export default function LandingPage() {
+  const { isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
   return (
     <div className="min-h-screen">
       {/* ── Navigation ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-white/70 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-white/95">
         <div className="mx-auto max-w-6xl flex items-center justify-between px-6 h-16">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold text-sm">
@@ -114,18 +117,38 @@ export default function LandingPage() {
           </Link>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/sign-in"
-              className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors px-3 py-2"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/sign-up"
-              className="text-sm font-medium bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-colors"
-            >
-              Get Started Free
-            </Link>
+            {isSignedIn ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors px-3 py-2"
+                >
+                  Dashboard
+                </Link>
+                <div className="flex items-center gap-2">
+                  <UserButton />
+                  <button
+                    onClick={() => signOut({ redirectUrl: "/" })}
+                    className="text-xs text-text-tertiary hover:text-text-secondary transition-colors px-2 py-1 rounded border border-border hover:border-border/80"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <SignInButton mode="modal">
+                  <button className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors px-3 py-2">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="text-sm font-medium bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-colors">
+                    Get Started Free
+                  </button>
+                </SignUpButton>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -173,13 +196,22 @@ export default function LandingPage() {
               custom={3}
               className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              <Link
-                href="/sign-up"
-                className="group flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
-              >
-                Start Free — No Card Required
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              {isSignedIn ? (
+                <Link
+                  href="/dashboard"
+                  className="group flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
+                >
+                  Go to Dashboard
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              ) : (
+                <SignUpButton mode="modal">
+                  <button className="group flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30">
+                    Start Free — No Card Required
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
+                </SignUpButton>
+              )}
               <Link
                 href="#how-it-works"
                 className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors px-4 py-3"
@@ -375,13 +407,22 @@ export default function LandingPage() {
               Join hundreds of small businesses using AI to transform their
               marketing. Your personalized roadmap is just minutes away.
             </p>
-            <Link
-              href="/sign-up"
-              className="group inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
-            >
-              Get Your Free Marketing Plan
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            {isSignedIn ? (
+              <Link
+                href="/dashboard"
+                className="group inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
+              >
+                Go to Dashboard
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            ) : (
+              <SignUpButton mode="modal">
+                <button className="group inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30">
+                  Get Your Free Marketing Plan
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              </SignUpButton>
+            )}
           </motion.div>
         </motion.div>
       </section>
