@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GrowthPilot 🚀
+> Your AI-Powered Marketing Consultant for Small Businesses.
 
-## Getting Started
+GrowthPilot is a production-ready SaaS application designed to empower small businesses with elite-level marketing strategies. It collects business information via an interactive wizard and generates a custom, budget-aware 30-day marketing roadmap, campaign copy, and conversion performance analysis.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   **Framework**: Next.js 16 (App Router)
+*   **Language**: TypeScript (Rigorous strict typing)
+*   **Database**: PostgreSQL via Prisma ORM 7
+*   **Authentication**: Clerk
+*   **Styling**: Tailwind CSS v4 + Framer Motion
+*   **AI Engine**: OpenAI API (`gpt-4o` with JSON structure modes)
+*   **Sanitization**: Isomorphic-DOMPurify (XSS Mitigation)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Key Features
 
-## Learn More
+1.  **Animated Landing Page**: Sleek Notion/Apple-like aesthetic using custom Tailwind v4 theme configurations and Framer Motion entrance animations.
+2.  **Data Collection Wizard**: Multi-step interactive wizard with debounced `localStorage` draft saving, step validation, budget selectors, and tone customizers.
+3.  **Dynamic Sidebar Workspace**: Route-aware workspace sidebar highlighting Project-specific items (Roadmap, Campaigns, Reports) dynamically.
+4.  **AI Roadmap Generator**: Translates business context and budget constraints into a detailed 30-day calendar complete with themes, daily tasks, deliverables, and KPI metrics.
+5.  **Campaigns Copy Library**: One-click copywriting creator for newsletters, Instagram posts, Google search ads, and blogs with clipboard utilities and image generation visual prompts.
+6.  **Performance Estimator Reports**: Real-time modeled reports visualizing budget distributions, milestone trajectories, and category benchmarks.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerequisites
 
-## Deploy on Vercel
+*   Node.js v20+
+*   PostgreSQL database instance
+*   Clerk account (API keys)
+*   OpenAI account (API key)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Installation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ritikteotia/mom.git
+   cd mom
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure environment variables (`.env.local`):
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/growthpilot?schema=public"
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
+   CLERK_SECRET_KEY="your_clerk_secret_key"
+   OPENAI_API_KEY="your_openai_api_key"
+   ```
+
+4. Apply database migrations:
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. Seed test profiles:
+   ```bash
+   npx prisma db seed
+   ```
+
+6. Start local development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🔒 Security Summary
+
+*   **SQL Injection Prevention**: Rigorous use of Prisma ORM query parameters (no raw SQL).
+*   **XSS Mitigation**: Strict DOMPurify sanitization wrappers applied to all AI-generated content before rendering.
+*   **Build-time safety**: Lazy client instantiation (Proxy wrapper) preventing evaluation crashes when environment variables are omitted during production builds.
