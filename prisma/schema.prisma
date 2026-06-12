@@ -1,0 +1,157 @@
+// GrowthPilot — Prisma Schema
+// All database interactions go through Prisma. No raw SQL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── User ────────────────────────────────────────────────────────
+// Synced from Clerk via webhook or on first login.
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projects Project[]
+}
+
+// ─── Project ─────────────────────────────────────────────────────
+// Top-level container — one user can have many projects.
+model Project {
+  id        String        @id @default(cuid())
+  name      String
+  status    ProjectStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  profile  BusinessProfile?
+  roadmap  Roadmap?
+  campaigns Campaign[]
+  reports   GeneratedReport[]
+
+  @@index([userId])
+}
+
+enum ProjectStatus {
+  DRAFT
+  GENERATING
+  ACTIVE
+  ARCHIVED
+}
+
+// ─── Business Profile ────────────────────────────────────────────
+// Captured by the multi-step wizard (Phase 2).
+model BusinessProfile {
+  id             String   @id @default(cuid())
+  businessName   String
+  industry       String
+  description    String   @db.Text
+  website        String?
+  socialLinks    Json?    // { instagram?: string, twitter?: string, linkedin?: string }
+  targetAudience String   @db.Text
+  goals          Json     // string[] — e.g. ["brand_awareness", "lead_gen"]
+  monthlyBudget  Float
+  currentChannels Json?   // string[] — e.g. ["instagram", "email"]
+  brandVoice     String?  @db.Text
+  competitors    Json?    // string[] — competitor names / URLs
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  projectId String  @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// ─── Roadmap ─────────────────────────────────────────────────────
+// The AI-generated 30-day marketing plan stored as structured JSON.
+model Roadmap {
+  id             String       @id @default(cuid())
+  status         RoadmapStatus @default(PENDING)
+  overview       String?      @db.Text
+  targetAudience Json?        // { demographics, psychographics, painPoints }
+  usps           Json?        // string[] — unique selling propositions
+  plan           Json?        // RoadmapWeek[] — the 30-day plan (see TS types)
+  rawResponse    Json?        // Full OpenAI response for debugging
+  generatedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  projectId String  @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+enum RoadmapStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
+}
+
+// ─── Campaign ────────────────────────────────────────────────────
+// Individual campaign ideas (AI-generated or user-created).
+model Campaign {
+  id            String         @id @default(cuid())
+  title         String
+  channel       String         // "instagram", "email", "google_ads", etc.
+  type          CampaignType
+  description   String         @db.Text
+  content       Json?          // { headline, body, cta, hashtags, ... }
+  scheduledDate DateTime?
+  status        CampaignStatus @default(DRAFT)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+enum CampaignType {
+  SOCIAL_POST
+  EMAIL
+  AD
+  BLOG
+  EVENT
+  OTHER
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  COMPLETED
+}
+
+// ─── Generated Report ────────────────────────────────────────────
+// Snapshot reports (weekly summaries, performance analysis, etc.).
+model GeneratedReport {
+  id        String     @id @default(cuid())
+  title     String
+  type      ReportType
+  content   Json       // Structured report data
+  createdAt DateTime   @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+enum ReportType {
+  WEEKLY_SUMMARY
+  AUDIENCE_ANALYSIS
+  CAMPAIGN_PERFORMANCE
+  COMPETITOR_ANALYSIS
+}
