@@ -25,6 +25,7 @@ GrowthPilot is a production-ready SaaS application designed to empower small bus
 4.  **AI Roadmap Generator**: Translates business context and budget constraints into a detailed 30-day calendar complete with themes, daily tasks, deliverables, and KPI metrics.
 5.  **Campaigns Copy Library**: One-click copywriting creator for newsletters, Instagram posts, Google search ads, and blogs with clipboard utilities and image generation visual prompts.
 6.  **Performance Estimator Reports**: Real-time modeled reports visualizing budget distributions, milestone trajectories, and category benchmarks.
+7.  **Secure Authentication**: Integrated Clerk authentication with secure middleware and a dedicated sign-out flow.
 
 ---
 
