@@ -54,7 +54,7 @@ export class RoadmapService {
         industry: profile.industry,
         description: profile.description,
         website: profile.website,
-        socialLinks: profile.socialLinks,
+        socialLinks: profile.socialLinks as Record<string, string> | undefined,
         goals: profile.goals as string[],
         monthlyBudget: profile.monthlyBudget,
         currentChannels: profile.currentChannels as string[],
@@ -89,9 +89,12 @@ export class RoadmapService {
         data: {
           status: RoadmapStatus.COMPLETED,
           overview: validatedData.overview,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           targetAudience: validatedData.targetAudience as any,
           usps: validatedData.usps,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           plan: validatedData.plan as any,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           rawResponse: rawJson as any,
           generatedAt: new Date(),
         },
@@ -103,7 +106,7 @@ export class RoadmapService {
       });
 
       return updatedRoadmap;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(`AI Roadmap Generation failed for project ${projectId}:`, error);
 
       // Set status to FAILED in DB

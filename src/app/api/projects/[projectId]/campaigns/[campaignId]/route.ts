@@ -49,10 +49,10 @@ export async function DELETE(request: Request, { params }: RouteParams) {
     await CampaignService.deleteCampaign(campaignId);
 
     return NextResponse.json({ success: true, message: "Campaign deleted successfully" });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("DELETE campaign error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to delete campaign" },
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || "Failed to delete campaign" },
       { status: 500 }
     );
   }

@@ -94,7 +94,7 @@ export default function CampaignsPage({ params }: PageProps) {
       const projRes = await fetch(`/api/projects`);
       const projJson = await projRes.json();
       if (projRes.ok && projJson.success) {
-        const found = projJson.data.find((p: any) => p.id === projectId);
+        const found = projJson.data.find((p: { id: string }) => p.id === projectId);
         if (found) setProject(found);
       }
 
@@ -109,48 +109,47 @@ export default function CampaignsPage({ params }: PageProps) {
         throw new Error(campJson.error || "Failed to load campaigns");
       }
       setCampaigns(campJson.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || "Failed to load campaigns data");
+      setError((err instanceof Error ? err.message : String(err)) || "Failed to load campaigns data");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   // Pre-populate form based on query params from roadmap day
   useEffect(() => {
     const initChannel = searchParams.get("initChannel");
     const initTitle = searchParams.get("initTitle");
+    const initType = searchParams.get("initType");
 
     if (initChannel || initTitle) {
-      if (initChannel) {
+      if (initChannel && initType) {
         const lower = initChannel.toLowerCase();
+        /* eslint-disable react-hooks/set-state-in-effect */
         if (lower.includes("instagram")) {
           setFormChannel("instagram");
           setFormType("SOCIAL_POST");
         } else if (lower.includes("email")) {
           setFormChannel("email");
-          setFormType("EMAIL");
-        } else if (lower.includes("google ad") || lower.includes("search ad") || lower.includes("ads")) {
-          setFormChannel("google_ads");
-          setFormType("AD");
-        } else if (lower.includes("blog") || lower.includes("seo") || lower.includes("article")) {
-          setFormChannel("seo");
-          setFormType("BLOG");
-        } else if (lower.includes("facebook")) {
-          setFormChannel("facebook");
+          setFormType("NEWSLETTER");
+        } else if (lower.includes("facebook") || lower.includes("tiktok") || lower.includes("linkedin")) {
+          setFormChannel(lower.includes("facebook") ? "facebook" : lower.includes("tiktok") ? "tiktok" : "linkedin");
           setFormType("SOCIAL_POST");
-        } else if (lower.includes("linkedin")) {
-          setFormChannel("linkedin");
+        } else if (lower.includes("blog") || lower.includes("seo") || lower.includes("content")) {
+          setFormChannel("seo");
           setFormType("SOCIAL_POST");
         } else {
           setFormChannel("other");
           setFormType("OTHER");
         }
+        /* eslint-enable react-hooks/set-state-in-effect */
       }
 
       if (initTitle) {
@@ -193,9 +192,9 @@ export default function CampaignsPage({ params }: PageProps) {
       // Open details modal of newly created campaign
       setActiveCampaign(newCampaign);
       setShowDetailsModal(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || "Failed to generate campaign copy");
+      setError((err instanceof Error ? err.message : String(err)) || "Failed to generate campaign copy");
     } finally {
       setIsGenerating(false);
     }
@@ -215,9 +214,9 @@ export default function CampaignsPage({ params }: PageProps) {
       if (activeCampaign?.id === campaignId) {
         setShowDetailsModal(false);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      alert(err.message || "Deletion failed");
+      alert((err instanceof Error ? err.message : String(err)) || "Deletion failed");
     } finally {
       setIsDeleting(null);
     }

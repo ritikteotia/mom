@@ -63,7 +63,7 @@ export interface RoadmapPromptInput {
   industry: string;
   description: string;
   website?: string | null;
-  socialLinks?: any;
+  socialLinks?: Record<string, string>;
   goals: string[];
   monthlyBudget: number;
   currentChannels: string[];

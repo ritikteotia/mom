@@ -77,6 +77,7 @@ export class CampaignService {
         channel,
         type,
         status: CampaignStatus.DRAFT,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         content: copyContent as any,
       },
     });

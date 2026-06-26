@@ -130,7 +130,7 @@ export default function RoadmapPage({ params }: PageProps) {
       }
 
       // Find the specific project
-      const currentProject = json.data.find((p: any) => p.id === projectId);
+      const currentProject = json.data.find((p: { id: string }) => p.id === projectId);
       if (!currentProject) {
         throw new Error("Project not found");
       }
@@ -149,16 +149,18 @@ export default function RoadmapPage({ params }: PageProps) {
       } else if (currentProject.roadmap?.status === "GENERATING") {
         setGenerating(true);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || "An unexpected error occurred");
+      setError((err instanceof Error ? err.message : String(err)) || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProject();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   // Handle message shifting during generation
@@ -181,7 +183,7 @@ export default function RoadmapPage({ params }: PageProps) {
         try {
           const res = await fetch(`/api/projects`);
           const json = await res.json();
-          const currentProject = json.data.find((p: any) => p.id === projectId);
+          const currentProject = json.data.find((p: { id: string }) => p.id === projectId);
           
           if (currentProject && currentProject.roadmap?.status === "COMPLETED") {
             setProject(currentProject);
@@ -228,9 +230,9 @@ export default function RoadmapPage({ params }: PageProps) {
         await fetchProject();
         setGenerating(false);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Generation error:", err);
-      setError(err.message || "Failed to trigger roadmap generation");
+      setError((err instanceof Error ? err.message : String(err)) || "Failed to trigger roadmap generation");
       setGenerating(false);
     }
   };

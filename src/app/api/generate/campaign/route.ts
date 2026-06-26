@@ -73,10 +73,10 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json({ success: true, data: campaign }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/generate/campaign error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to generate campaign content" },
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || "Failed to generate campaign content" },
       { status: 500 }
     );
   }

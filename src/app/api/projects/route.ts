@@ -39,11 +39,11 @@ export async function GET() {
     });
 
     return NextResponse.json({ success: true, data: projects });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("GET /api/projects error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Internal server error" },
-      { status: error.message?.includes("Unauthorized") ? 401 : 500 }
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || "Internal server error" },
+      { status: (error instanceof Error ? error.message : String(error))?.includes("Unauthorized") ? 401 : 500 }
     );
   }
 }
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ success: true, data: project }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/projects error:", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -102,8 +102,8 @@ export async function POST(request: Request) {
       );
     }
     return NextResponse.json(
-      { success: false, error: error.message || "Internal server error" },
-      { status: error.message?.includes("Unauthorized") ? 401 : 500 }
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || "Internal server error" },
+      { status: (error instanceof Error ? error.message : String(error))?.includes("Unauthorized") ? 401 : 500 }
     );
   }
 }

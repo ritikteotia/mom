@@ -34,9 +34,9 @@ export default function ProjectsPage() {
         }
 
         setProjects(json.data);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Projects loading error:", err);
-        setError(err.message || "An unexpected error occurred");
+        setError((err instanceof Error ? err.message : String(err)) || "An unexpected error occurred");
       } finally {
         setIsLoading(false);
       }

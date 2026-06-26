@@ -38,6 +38,7 @@ export function useWizardState() {
       if (saved) {
         const parsed = JSON.parse(saved);
         // Ensure structure matches
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setFormData({
           ...INITIAL_DATA,
           ...parsed,

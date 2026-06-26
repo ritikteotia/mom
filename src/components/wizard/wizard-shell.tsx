@@ -124,9 +124,9 @@ export function WizardShell() {
       
       router.push(`/projects/${createdProject.id}`);
       router.refresh();
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error("Submit error:", e);
-      setErrors({ submit: e.message || "An unexpected error occurred while saving." });
+      setErrors({ submit: (e instanceof Error ? e.message : String(e)) || "An unexpected error occurred while saving." });
       setIsSubmitting(false);
     }
   };

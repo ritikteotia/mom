@@ -59,10 +59,10 @@ export async function POST(request: Request) {
     const roadmap = await RoadmapService.generateAndSaveRoadmap(projectId);
 
     return NextResponse.json({ success: true, data: roadmap });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/generate/roadmap error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to generate roadmap" },
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || "Failed to generate roadmap" },
       { status: 500 }
     );
   }

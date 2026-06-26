@@ -31,10 +31,10 @@ export async function GET(request: Request, { params }: RouteParams) {
     const campaigns = await CampaignService.getCampaignsByProjectId(projectId);
 
     return NextResponse.json({ success: true, data: campaigns });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("GET /api/projects/[projectId]/campaigns error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to load campaigns" },
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || "Failed to load campaigns" },
       { status: 500 }
     );
   }

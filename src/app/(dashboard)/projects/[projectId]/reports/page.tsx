@@ -53,15 +53,15 @@ export default function ReportsPage({ params }: PageProps) {
           throw new Error(json.error || "Failed to load project details");
         }
 
-        const currentProject = json.data.find((p: any) => p.id === projectId);
+        const currentProject = json.data.find((p: { id: string }) => p.id === projectId);
         if (!currentProject) {
           throw new Error("Project not found");
         }
 
         setProject(currentProject);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
-        setError(err.message || "Failed to load reports workspace");
+        setError((err instanceof Error ? err.message : String(err)) || "Failed to load reports workspace");
       } finally {
         setLoading(false);
       }
