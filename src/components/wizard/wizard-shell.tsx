@@ -179,7 +179,7 @@ export function WizardShell() {
       <div className="max-w-3xl mx-auto">
         {/* Progress Header */}
         <div className="mb-8 space-y-4">
-          <div className="flex items-center justify-between text-xs font-semibold text-text-secondary uppercase tracking-wider">
+          <div className="flex items-center justify-between text-xs font-bold text-text-primary uppercase tracking-wider">
             <span>
               Step {currentStep} of {TOTAL_STEPS}: {STEP_TITLES[currentStep - 1]}
             </span>
