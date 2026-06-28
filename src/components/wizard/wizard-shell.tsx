@@ -49,7 +49,7 @@ export function WizardShell() {
   }
 
   // Validate the current step before advancing
-  const validateStep = (step: number): boolean => {
+  const validateStep = (step: number, updateState: boolean = true): boolean => {
     const stepErrors: Record<string, string> = {};
 
     if (step === 1) {
@@ -73,7 +73,9 @@ export function WizardShell() {
       }
     }
 
-    setErrors(stepErrors);
+    if (updateState) {
+      setErrors(stepErrors);
+    }
     return Object.keys(stepErrors).length === 0;
   };
 
@@ -198,7 +200,7 @@ export function WizardShell() {
               return (
                 <div key={title} className="flex flex-col items-center space-y-1">
                   <button
-                    disabled={isSubmitting || stepNum > currentStep && !validateStep(currentStep)}
+                    disabled={isSubmitting || stepNum > currentStep && !validateStep(currentStep, false)}
                     onClick={() => {
                       // Allow backing to any step, but only advancing if active is validated
                       if (stepNum < currentStep) {
