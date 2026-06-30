@@ -1,7 +1,7 @@
 # MOM 🚀
 > Your AI-Powered Marketing Consultant for Small Businesses.
 
-MOM is a production-ready SaaS application designed to empower small businesses with elite-level marketing strategies. It collects business information via an interactive wizard and generates a custom, budget-aware 30-day marketing roadmap, campaign copy, and conversion performance analysis.
+MOM (Marketing Operations Manager) is a production-ready SaaS application designed to empower small businesses with elite-level marketing strategies. It collects business information via an interactive wizard and generates a custom, budget-aware 30-day marketing roadmap, campaign copy, and conversion performance analysis.
 
 ---
 
