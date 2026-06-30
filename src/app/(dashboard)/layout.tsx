@@ -81,7 +81,7 @@ export default function DashboardLayout({
               G
             </div>
             <span className="font-semibold text-text-primary text-[15px]">
-              GrowthPilot
+              MOM
             </span>
           </Link>
           <button
@@ -204,7 +204,7 @@ export default function DashboardLayout({
           {/* Right side */}
           <div className="flex items-center gap-2">
             <div className="hidden sm:block text-xs text-text-tertiary">
-              GrowthPilot v1.0
+              MOM v1.0
             </div>
           </div>
         </header>

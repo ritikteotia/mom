@@ -15,7 +15,7 @@ async function main() {
     update: {},
     create: {
       clerkId: "seed_dev_user_001",
-      email: "dev@growthpilot.test",
+      email: "dev@mom.test",
       firstName: "Dev",
       lastName: "Tester",
       avatarUrl: null,

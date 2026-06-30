@@ -149,7 +149,7 @@ export default function DashboardPage() {
             <Sparkles className="h-8 w-8 text-primary" />
           </div>
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-text-primary">Welcome to GrowthPilot</h3>
+            <h3 className="text-lg font-semibold text-text-primary">Welcome to MOM</h3>
             <p className="text-sm text-text-secondary max-w-sm mx-auto leading-relaxed">
               Generate detailed customer avatars, campaign copy, and a day-by-day 30-day marketing roadmap for your small business.
             </p>

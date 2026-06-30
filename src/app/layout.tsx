@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "GrowthPilot — AI Marketing Consultant for Small Businesses",
-    template: "%s | GrowthPilot",
+    default: "MOM — AI Marketing Consultant for Small Businesses",
+    template: "%s | MOM",
   },
   description:
-    "GrowthPilot is your AI-powered marketing consultant. Get a personalized 30-day marketing roadmap, " +
+    "MOM is your AI-powered marketing consultant. Get a personalized 30-day marketing roadmap, " +
     "campaign ideas, and audience analysis tailored to your small business.",
   keywords: [
     "AI marketing",
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
     "campaign generator",
   ],
   openGraph: {
-    title: "GrowthPilot — AI Marketing Consultant",
+    title: "MOM — AI Marketing Consultant",
     description:
       "Get a personalized 30-day marketing roadmap for your small business, powered by AI.",
     type: "website",
     locale: "en_US",
-    siteName: "GrowthPilot",
+    siteName: "MOM",
   },
 };
 

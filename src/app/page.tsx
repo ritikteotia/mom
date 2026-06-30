@@ -112,7 +112,7 @@ export default function LandingPage() {
               G
             </div>
             <span className="font-semibold text-text-primary text-[15px]">
-              GrowthPilot
+              MOM
             </span>
           </Link>
 
@@ -236,7 +236,7 @@ export default function LandingPage() {
                   <div className="h-2.5 w-2.5 rounded-full bg-warning" />
                   <div className="h-2.5 w-2.5 rounded-full bg-success" />
                   <div className="flex-1" />
-                  <span className="text-xs text-text-tertiary font-mono">growthpilot.app</span>
+                  <span className="text-xs text-text-tertiary font-mono">mom.app</span>
                 </div>
 
                 <div className="space-y-3">
@@ -298,7 +298,7 @@ export default function LandingPage() {
               custom={1}
               className="mt-4 text-text-secondary max-w-xl mx-auto"
             >
-              GrowthPilot combines AI intelligence with marketing expertise to
+              MOM combines AI intelligence with marketing expertise to
               give you an actionable plan — not just generic advice.
             </motion.p>
           </motion.div>
@@ -435,7 +435,7 @@ export default function LandingPage() {
               G
             </div>
             <span className="text-sm text-text-tertiary">
-              GrowthPilot © {new Date().getFullYear()}
+              MOM © {new Date().getFullYear()}
             </span>
           </div>
           <p className="text-xs text-text-tertiary">

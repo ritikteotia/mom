@@ -1,4 +1,4 @@
-# GrowthPilot — Security Constraints
+# MOM — Security Constraints
 
 > **CRITICAL**: All code must comply with these constraints. Any violation is a security incident.
 

@@ -1,7 +1,7 @@
-# GrowthPilot 🚀
+# MOM 🚀
 > Your AI-Powered Marketing Consultant for Small Businesses.
 
-GrowthPilot is a production-ready SaaS application designed to empower small businesses with elite-level marketing strategies. It collects business information via an interactive wizard and generates a custom, budget-aware 30-day marketing roadmap, campaign copy, and conversion performance analysis.
+MOM is a production-ready SaaS application designed to empower small businesses with elite-level marketing strategies. It collects business information via an interactive wizard and generates a custom, budget-aware 30-day marketing roadmap, campaign copy, and conversion performance analysis.
 
 ---
 
@@ -53,7 +53,7 @@ GrowthPilot is a production-ready SaaS application designed to empower small bus
 
 3. Configure environment variables (`.env.local`):
    ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/growthpilot?schema=public"
+   DATABASE_URL="postgresql://user:password@localhost:5432/mom?schema=public"
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
    CLERK_SECRET_KEY="your_clerk_secret_key"
    OPENAI_API_KEY="your_openai_api_key"

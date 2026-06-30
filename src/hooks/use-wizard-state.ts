@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { BusinessProfileFormData } from "@/types/profile";
 
-const LOCAL_STORAGE_KEY = "growthpilot_wizard_draft";
+const LOCAL_STORAGE_KEY = "mom_wizard_draft";
 
 const INITIAL_DATA: BusinessProfileFormData = {
   businessName: "",

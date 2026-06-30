@@ -338,7 +338,7 @@ export default function RoadmapPage({ params }: PageProps) {
               <strong className="text-text-primary">
                 ${project?.profile?.monthlyBudget.toLocaleString()}
               </strong>
-              , and target goals, GrowthPilot will compile a structured 30-day step-by-step marketing schedule.
+              , and target goals, MOM will compile a structured 30-day step-by-step marketing schedule.
             </p>
           </div>
 

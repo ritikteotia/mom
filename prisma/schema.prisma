@@ -1,4 +1,4 @@
-// GrowthPilot — Prisma Schema
+// MOM — Prisma Schema
 // All database interactions go through Prisma. No raw SQL.
 
 generator client {
